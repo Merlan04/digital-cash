@@ -1,0 +1,6 @@
+aiogram==3.0.0
+pandas
+openpyxl
+apscheduler>=3.10.0
+setuptools>=65.0
+python-dotenv
