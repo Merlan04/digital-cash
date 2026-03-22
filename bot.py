@@ -1,16 +1,15 @@
-# bot.py (ОБНОВЛЁННЫЙ)
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.base import BaseStorage
 from config import BOT_TOKEN
 
-from handlers import start, expense, income, stats, edit, reset, goals, games, fun
+from handlers import start, expense, income, stats, edit, reset, goals, fun
 from database.db import init_db
 from database.fsm_storage import DatabaseFSMStorage
 from utils.scheduler import start_scheduler
 
-# Включите логиро��ание
+# Включите логирование
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -25,7 +24,6 @@ async def main():
     # Важный порядок: более специфичные фильтры в начале
     start.register(dp)
     goals.register(dp)
-    games.register(dp)
     fun.register(dp)
     stats.register(dp)
     edit.register(dp)
