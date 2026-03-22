@@ -24,7 +24,6 @@ async def main():
     # Важный порядок: более специфичные фильтры в начале
     start.register(dp)
     goals.register(dp)
-    fun.register(dp)
     stats.register(dp)
     edit.register(dp)
     reset.register(dp)
