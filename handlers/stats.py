@@ -4,8 +4,9 @@ from utils.excel import create_excel
 
 router = Router()
 
-@router.message(lambda m: m.text == "📊 Статистика")
-async def stats(message: types.Message):
+@router.message(lambda m: m.text == "💰 Статистика расходов")
+async def stats_handler(message: types.Message):
+    # Ваш код...
     data = get_expenses(message.from_user.id)
 
     if not data:
