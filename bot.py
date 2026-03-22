@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.base import BaseStorage
 from config import BOT_TOKEN
 
-from handlers import start, expense, income, stats, edit, reset, goals, fun
+from handlers import start, expense, income, stats, edit, reset, goals
 from database.db import init_db
 from database.fsm_storage import DatabaseFSMStorage
 from utils.scheduler import start_scheduler
