@@ -1,8 +1,8 @@
-# handlers/income.py (С СУММАМИ)
+# handlers/income.py (ИСПРАВЛЕННЫЙ)
 from aiogram import types, Router
 from datetime import datetime
 from database.db import add_transaction
-from utils.categories import detect_income_category
+from utils.categories import detect_category
 
 router = Router()
 
@@ -26,7 +26,7 @@ async def add_income(message: types.Message):
         amount = int(text[-1])
         category_text = " ".join(text[:-1])
 
-        category = detect_income_category(category_text)
+        category = detect_category(category_text)
 
         add_transaction(
             message.from_user.id,
