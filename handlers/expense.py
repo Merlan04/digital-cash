@@ -1,13 +1,14 @@
-# handlers/expense.py (С СУММАМИ)
+# handlers/expense.py
 from aiogram import types, Router
 from datetime import datetime
 from database.db import add_transaction
 from utils.categories import detect_category
+from aiogram.fsm.context import FSMContext
 
 router = Router()
 
 def is_expense_format(message: types.Message) -> bool:
-    """Проверяет фо��мат: категория сумма"""
+    """Проверяет формат: категория сумма"""
     if message.text.startswith("/"):
         return False
     if message.text.startswith("🎯"):
@@ -28,7 +29,12 @@ def is_expense_format(message: types.Message) -> bool:
         return False
 
 @router.message(lambda m: is_expense_format(m))
-async def add_expense(message: types.Message):
+async def add_expense(message: types.Message, state: FSMContext):
+    # Пропускаем если находимся в игре рулетки
+    current_state = await state.get_state()
+    if current_state and "roulette" in current_state.lower():
+        return
+    
     try:
         text = message.text.split()
         amount = int(text[-1])
