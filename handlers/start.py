@@ -1,80 +1,67 @@
+# handlers/start.py (ОБНОВЛЁННЫЙ)
 from aiogram import types, Router
 from aiogram.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from database.db import add_user
 
 router = Router()
 
-
 @router.message(Command("start"))
 async def start_handler(message: types.Message):
-    # Добавить пользователя в БД
-    add_user(
-        message.from_user.id,
-        message.from_user.first_name,
-        message.from_user.last_name
+    """Команда /start"""
+    await message.answer(
+        f"👋 Привет, {message.from_user.first_name}!\n\n"
+        "💰 Добро пожаловать в Finance Bot!\n\n"
+        "Я помогу тебе отслеживать доходы и расходы в сўм.\n"
+        "Учи цели, играй в игры и становись финансово грамотнее!"
     )
-
+    
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="🎯 Мои цели"), KeyboardButton(text="📊 Статистика целей")],
-            [KeyboardButton(text="💰 Статистика расходов"), KeyboardButton(text="🎮 Мини-игры")],
-            [KeyboardButton(text="✏️ Редактировать"), KeyboardButton(text="🗑️ Сбросить данные")],
+            [KeyboardButton(text="💰 Статистика расходов"), KeyboardButton(text="🎯 Мои цели")],
+            [KeyboardButton(text="✏️ Редактир��вать"), KeyboardButton(text="🗑️ Сброс")],
+            [KeyboardButton(text="🎮 Игры"), KeyboardButton(text="💭 Цитата дня")],
+            [KeyboardButton(text="🎯 Челлендж"), KeyboardButton(text="🏆 Мои достижения")],
             [KeyboardButton(text="ℹ️ Справка")]
         ],
         resize_keyboard=True
     )
+    
+    await message.answer("Выбери действие:", reply_markup=keyboard)
 
-    await message.answer(
-        "👋 Привет! Я бот для учета финансов И достижения целей.\\n\\n"
-        "📝 КАК ПОЛЬЗОВАТЬСЯ:\\n"
-        "• /add_goal - Добавить новую цель\\n"
-        "• 🎯 Мои цели - Посмотреть цели на сегодня\\n"
-        "• 📊 Статистика целей - Узнать прогресс\\n"
-        "• 🎮 Играй в мини-игры и побеждай!\\n\\n"
-        "Финансы:\\n"
-        "• Введите: <категория> <сумма> - добавить расход\\n"
-        "  Пример: еда 500\\n"
-        "• Введите: зарплата 50000 - добавить доход\\n"
-        "• Нажимайте кнопки для других функций",
-        reply_markup=keyboard
-    )
-
-
-@router.message(lambda m: m.text == "ℹ️ Справка")
+@router.message(Command("help"))
 async def help_handler(message: types.Message):
-    text = "📖 СПРАВКА:\\n\\n"
-    text += "🎯 ЦЕЛИ:\\n"
-    text += "• /add_goal - Добавить цель\\n"
-    text += "• 🎯 Мои цели - Просмотреть цели\\n"
-    text += "• 📊 Статистика целей - Статистика\\n\\n"
-    
-    text += "🎮 МИН��-ИГРЫ:\\n"
-    text += "• 🏀 Бросок в кольцо\\n"
-    text += "• ⚽ Пинок в ворота\\n"
-    text += "• 🎯 Рулетка удачи\\n\\n"
-    
-    text += "💳 РАСХОДЫ:\\n"
-    text += "Введите: категория сумма\\n"
-    text += "Примеры:\\n"
-    text += "  еда 500\\n"
-    text += "  такси 200\\n"
-    text += "  покупка одежда 1500\\n\\n"
+    """Справка"""
+    text = """
+📖 СПРАВКА ПО ИСПОЛЬЗОВАНИЮ:
 
-    text += "💰 ДОХОДЫ:\\n"
-    text += "Введите: источник сумма\\n"
-    text += "Примеры:\\n"
-    text += "  зарплата 50000\\n"
-    text += "  доход 10000\\n"
-    text += "  фриланс 5000\\n\\n"
+**Добавить расход:**
+еда 5000
+такси 15000
+покупка одежда 100000
 
-    text += "📊 ФУНКЦИИ:\\n"
-    text += "• 💰 Статистика расходов - смотреть расходы\\n"
-    text += "• ✏️ Редактировать - изменить/удалить\\n"
-    text += "• 🗑️ Сбросить - удалить все данные\\n"
+**Добавить доход:**
+зарплата 500000
+доход 50000
+фриланс 20000
 
+**Кнопки:**
+💰 Статистика - просмотр расходов по категориям
+🎯 Мои цели - управление целями на день
+📊 Статистика целей - прогресс целей
+✏️ Редактировать - изменить или удалить транзакцию
+🗑️ Сброс - удалить все данные
+🎮 Игры - сыграй в мини-игры
+💭 Цитата дня - получи мотивацию
+🎯 Челлендж - ежедневный вызов
+🏆 Мои достижения - твои награды
+
+**Примеры категорий расходов:**
+🍔 еда, burger, pizza, кафе, ресторан
+🚕 такси, метро, бензин, транспорт
+🎬 netflix, spotify (подписки)
+🛍️ магазин, одежда, шоппинг
+"""
     await message.answer(text)
-
 
 def register(dp):
     dp.include_router(router)
