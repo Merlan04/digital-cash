@@ -18,7 +18,7 @@ async def start_handler(message: types.Message):
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="🎯 Мои цели"), KeyboardButton(text="📊 Статистика целей")],
-            [KeyboardButton(text="📊 Статистика"), KeyboardButton(text="📁 Excel отчет")],
+            [KeyboardButton(text="💰 Статистика расходов"), KeyboardButton(text="🎮 Мини-игры")],
             [KeyboardButton(text="✏️ Редактировать"), KeyboardButton(text="🗑️ Сбросить данные")],
             [KeyboardButton(text="ℹ️ Справка")]
         ],
@@ -30,7 +30,8 @@ async def start_handler(message: types.Message):
         "📝 КАК ПОЛЬЗОВАТЬСЯ:\\n"
         "• /add_goal - Добавить новую цель\\n"
         "• 🎯 Мои цели - Посмотреть цели на сегодня\\n"
-        "• 📊 Статистика целей - Узнать прогресс\\n\\n"
+        "• 📊 Статистика целей - Узнать прогресс\\n"
+        "• 🎮 Играй в мини-игры и побеждай!\\n\\n"
         "Финансы:\\n"
         "• Введите: <категория> <сумма> - добавить расход\\n"
         "  Пример: еда 500\\n"
@@ -48,6 +49,11 @@ async def help_handler(message: types.Message):
     text += "• 🎯 Мои цели - Просмотреть цели\\n"
     text += "• 📊 Статистика целей - Статистика\\n\\n"
     
+    text += "🎮 МИН��-ИГРЫ:\\n"
+    text += "• 🏀 Бросок в кольцо\\n"
+    text += "• ⚽ Пинок в ворота\\n"
+    text += "• 🎯 Рулетка удачи\\n\\n"
+    
     text += "💳 РАСХОДЫ:\\n"
     text += "Введите: категория сумма\\n"
     text += "Примеры:\\n"
@@ -63,8 +69,7 @@ async def help_handler(message: types.Message):
     text += "  фриланс 5000\\n\\n"
 
     text += "📊 ФУНКЦИИ:\\n"
-    text += "• 📊 Статистика - смотреть расходы\\n"
-    text += "• 📁 Excel - скачать отчет\\n"
+    text += "• 💰 Статистика расходов - смотреть расходы\\n"
     text += "• ✏️ Редактировать - изменить/удалить\\n"
     text += "• 🗑️ Сбросить - удалить все данные\\n"
 
