@@ -19,7 +19,7 @@ async def start_handler(message: types.Message):
         keyboard=[
             [KeyboardButton(text="💰 Статистика расходов"), KeyboardButton(text="🎯 Мои цели")],
             [KeyboardButton(text="✏️ Редактир��вать"), KeyboardButton(text="🗑️ Сброс")],
-            [KeyboardButton(text="🎮 Игры"), KeyboardButton(text="💭 Цитата дня")],
+            [KeyboardButton(text="🎲 Рулетка удачи"), KeyboardButton(text="💭 Цитата дня")],
             [KeyboardButton(text="🎯 Челлендж"), KeyboardButton(text="🏆 Мои достижения")],
             [KeyboardButton(text="ℹ️ Справка")]
         ],
