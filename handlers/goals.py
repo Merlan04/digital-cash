@@ -134,3 +134,21 @@ async def goals_stats(message: types.Message):
 
 def register(dp):
     dp.include_router(router)
+
+@router.message(lambda m: m.text == "🔙 Назад в главное меню")
+async def back_to_menu(message: types.Message):
+    """Вернуться в главное меню"""
+    from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+    
+    keyboard = ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="💰 Статистика расходов"), KeyboardButton(text="🎯 Мои цели")],
+            [KeyboardButton(text="✏️ Редактировать"), KeyboardButton(text="🗑️ Сброс")],
+            [KeyboardButton(text="🎮 Игры"), KeyboardButton(text="💭 Цитата дня")],
+            [KeyboardButton(text="🎯 Челлендж"), KeyboardButton(text="🏆 Мои достижения")],
+            [KeyboardButton(text="ℹ️ Справка")]
+        ],
+        resize_keyboard=True
+    )
+    
+    await message.answer("🔙 Вернулся в главное меню", reply_markup=keyboard)
