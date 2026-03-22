@@ -1,12 +1,12 @@
+# handlers/stats.py (БЕЗ EXCEL)
 from aiogram import types, Router
 from database.db import get_expenses, get_all
-from utils.excel import create_excel
 
 router = Router()
 
 @router.message(lambda m: m.text == "💰 Статистика расходов")
 async def stats_handler(message: types.Message):
-    # Ваш код...
+    """Показать статистику расходов"""
     data = get_expenses(message.from_user.id)
 
     if not data:
@@ -17,23 +17,12 @@ async def stats_handler(message: types.Message):
     total = 0
 
     for cat, amount in data:
-        text += f"💳 {cat} — {amount}₽\n"
+        text += f"💳 {cat} — {amount} сўм\n"
         total += amount
 
-    text += f"\n💰 Всего: {total}₽"
+    text += f"\n💰 Всего: {total} сўм"
 
     await message.answer(text)
-
-@router.message(lambda m: m.text == "📁 Excel отчет")
-async def excel(message: types.Message):
-    try:
-        file = create_excel(message.from_user.id)
-
-        if file:
-            with open(file, "rb") as f:
-                await message.answer_document(f, caption="📊 Ваш отчет")
-    except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
 
 def register(dp):
     dp.include_router(router)
