@@ -1,3 +1,4 @@
+# handlers/goals.py (ОБНОВЛЁННЫЙ)
 from aiogram import types, Router
 from aiogram.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
@@ -8,10 +9,8 @@ from datetime import datetime
 
 router = Router()
 
-
 class GoalStates(StatesGroup):
     waiting_for_goal = State()
-
 
 @router.message(lambda m: m.text == "🎯 Мои цели")
 async def show_goals(message: types.Message, state: FSMContext):
@@ -52,7 +51,6 @@ async def show_goals(message: types.Message, state: FSMContext):
     
     await message.answer(text, reply_markup=keyboard, parse_mode="HTML")
 
-
 @router.callback_query(lambda c: c.data.startswith("complete_goal_"))
 async def complete_goal_callback(callback: types.CallbackQuery):
     """Отметить цель как выполненную"""
@@ -61,7 +59,6 @@ async def complete_goal_callback(callback: types.CallbackQuery):
     
     await callback.answer("✅ Цель отмечена как выполненная!", show_alert=False)
     await callback.message.edit_text("✅ Цель выполнена! Отличная работа! 🎉")
-
 
 @router.callback_query(lambda c: c.data == "add_goal_btn")
 async def add_goal_btn(callback: types.CallbackQuery, state: FSMContext):
@@ -76,7 +73,6 @@ async def add_goal_btn(callback: types.CallbackQuery, state: FSMContext):
     )
     await state.set_state(GoalStates.waiting_for_goal)
 
-
 @router.message(Command("add_goal"))
 async def add_goal_command(message: types.Message, state: FSMContext):
     """Команда для добавления цели"""
@@ -89,7 +85,6 @@ async def add_goal_command(message: types.Message, state: FSMContext):
         "• Позвонить другу"
     )
     await state.set_state(GoalStates.waiting_for_goal)
-
 
 @router.message(GoalStates.waiting_for_goal)
 async def process_goal_text(message: types.Message, state: FSMContext):
@@ -104,6 +99,7 @@ async def process_goal_text(message: types.Message, state: FSMContext):
         keyboard=[
             [KeyboardButton(text="🎯 Мои цели")],
             [KeyboardButton(text="📊 Статистика целей")],
+            [KeyboardButton(text="🔙 Назад в главное меню")],
         ],
         resize_keyboard=True
     )
@@ -114,7 +110,6 @@ async def process_goal_text(message: types.Message, state: FSMContext):
         reply_markup=keyboard
     )
     await state.clear()
-
 
 @router.message(lambda m: m.text == "📊 Статистика целей")
 async def goals_stats(message: types.Message):
@@ -136,7 +131,6 @@ async def goals_stats(message: types.Message):
         text += "🎉 <b>Все цели выполнены! Отличная работа!</b>"
     
     await message.answer(text, parse_mode="HTML")
-
 
 def register(dp):
     dp.include_router(router)
