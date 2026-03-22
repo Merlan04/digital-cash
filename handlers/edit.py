@@ -24,7 +24,7 @@ async def edit_menu(message: types.Message, state: FSMContext):
     text = "📝 Ваши транзакции:\n\n"
     for i, (transaction_id, cat, amount, ttype, date) in enumerate(data, 1):
         icon = "💳" if ttype == "expense" else "💰"
-        text += f"{i}. {icon} {cat} — {amount}₽ ({date})\n"
+        text += f"{i}. {icon} {cat} — {amount}so'm  ({date})\n"
 
     text += "\n🔢 Введите номер транзакции для редактирования (например: 1)"
 
@@ -49,7 +49,7 @@ async def select_transaction(message: types.Message, state: FSMContext):
         await state.update_data(selected_id=transaction_id, selected_transaction=transaction)
 
         transaction_id, cat, amount, ttype, date = transaction
-        text = f"Выбранная транзакция:\n{cat} — {amount}₽ ({date})\n\n"
+        text = f"Выбранная транзакция:\n{cat} — {amount}so'm  ({date})\n\n"
         text += "Выберите действие:\n"
         text += "1️⃣ Изменить сумму\n"
         text += "2️⃣ Удалить"
@@ -81,7 +81,7 @@ async def set_new_amount(message: types.Message, state: FSMContext):
 
         update_transaction(transaction_id, new_amount)
 
-        await message.answer(f"✅ Сумма изменена на {new_amount}₽")
+        await message.answer(f"✅ Сумма изменена на {new_amount}so'm ")
         await state.clear()
     except ValueError:
         await message.answer("❌ Введите число")
