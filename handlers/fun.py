@@ -78,12 +78,13 @@ async def check_bet(message: types.Message, state: FSMContext):
     """Проверить ставку"""
     try:
         user_number = int(message.text)
-        if user_number < 1 or user_number > 10:
-            await message.answer("❌ Число должно быть от 1 до 10!")
-            return
         
         data = await state.get_data()
         secret = data['secret_number']
+        
+        if user_number < 1 or user_number > 10:
+            await message.answer("❌ Число должно быть от 1 до 10!")
+            return
         
         if user_number == secret:
             await message.answer(f"🎉 ПОБЕДА! Угадал число {secret}! +50,000 сўм 💰")
