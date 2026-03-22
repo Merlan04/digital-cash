@@ -1,8 +1,5 @@
 # handlers/fun.py
 from aiogram import types, Router
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-import random
-from aiogram import types, Router
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
@@ -27,16 +24,6 @@ DAILY_CHALLENGES = [
     "🎯 Челлендж: Запиши все расходы за день точно! 📝"
 ]
 
-ACHIEVEMENTS = {
-    "first_transaction": "🏅 Первая транзакция! Ты начал!",
-    "100k": "💰 Ты отслеживаешь 100,000 сўм!",
-    "1m": "💵 Молодец! 1,000,000 сўм под контролем!",
-    "week_streak": "🔥 Неделя подряд без пропусков!",
-    "smart_saver": "💎 Умный сбережник - 50% экономии!",
-    "goal_master": "🎯 Мастер целей - 10 целей выполнено!",
-    "game_lover": "🎮 Геймер - 20 игр сыграно!"
-}
-
 @router.message(lambda m: m.text == "💭 Цитата дня")
 async def quote_handler(message: types.Message):
     """Случайная цитата"""
@@ -58,15 +45,6 @@ async def achievements_handler(message: types.Message):
     text += "💎 Умный сбережник\n\n"
     text += "_Продолжай так! Больше достижений ждут тебя!_"
     await message.answer(text)
-
-def register(dp):
-    dp.include_router(router)
-
-# В конец handlers/fun.py добавь:
-
-from aiogram.fsm.state import State, StatesGroup
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import random
 
 class RouletteStates(StatesGroup):
     waiting_for_bet = State()
@@ -121,3 +99,6 @@ async def roulette_rules(callback: types.CallbackQuery):
     """Правила"""
     await callback.message.answer("📋 Угадай число 1-10 и выиграй +50,000 сўм! 🎲")
     await callback.answer()
+
+def register(dp):
+    dp.include_router(router)
