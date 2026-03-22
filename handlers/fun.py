@@ -2,6 +2,11 @@
 from aiogram import types, Router
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 import random
+from aiogram import types, Router
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+import random
 
 router = Router()
 
